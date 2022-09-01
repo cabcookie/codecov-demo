@@ -82,18 +82,11 @@ export class Calculator {
 
   getDisplayNumber(number) {
     const stringNumber = number.toString()
-    
     const integerDigits = parseFloat(stringNumber.split('.')[0])
-    console.log('integerDigits after parseFloat', integerDigits);
-    
     const decimalDigits = stringNumber.split('.')[1]
-    console.log('decimalDigits after split', decimalDigits);
-
     let integerDisplay
     
     if (isNaN(integerDigits)) {
-      console.log('integerDigits is not a number');
-
       if (stringNumber.length > 0) {
         integerDisplay = 0;
       } else {

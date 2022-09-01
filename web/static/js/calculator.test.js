@@ -73,9 +73,47 @@ describe('Calculator test suite', () => {
     expect(calculator.previousOperand).toBe('1.2');
   })
 
-  // test('compute', () => {
-  //   jest.spyOn(calculator, 'callApi').mockReturnValue();
-  // })
+  test('compute', () => {
+    const callApi = jest.spyOn(calculator, 'callApi');
+    // callApi.mockImplementation()
+    callApi.mockImplementation(operation => {
+      if (operation === 'add') calculator.currentOperand = 3+3;
+      if (operation === 'divide') calculator.currentOperand = 3/3;
+      if (operation === 'multiply') calculator.currentOperand = 3*3;
+      if (operation === 'subtract') calculator.currentOperand = 3-3;
+      calculator.operation = undefined;
+      calculator.previousOperand = '';
+    });
+    
+    const run = operation => {
+      calculator.clear();
+      calculator.appendNumber(3);
+      calculator.chooseOperation(operation);
+      calculator.appendNumber(3);
+      calculator.compute();
+    }
+
+    run('+');
+    expect(calculator.previousOperand).toBe('');
+    expect(calculator.operation).toBeUndefined();
+    expect(calculator.currentOperand).toBe(6);
+
+    run('-');
+    expect(calculator.previousOperand).toBe('');
+    expect(calculator.operation).toBeUndefined();
+    expect(calculator.currentOperand).toBe(0);
+
+    run('*');
+    expect(calculator.previousOperand).toBe('');
+    expect(calculator.operation).toBeUndefined();
+    expect(calculator.currentOperand).toBe(9);
+
+    run('÷');
+    expect(calculator.previousOperand).toBe('');
+    expect(calculator.operation).toBeUndefined();
+    expect(calculator.currentOperand).toBe(1);
+
+  })
 
   test('get display number', () => {
     expect(calculator.getDisplayNumber(1.2)).toBe('1.2');
